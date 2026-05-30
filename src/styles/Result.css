@@ -1,0 +1,266 @@
+.result-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+.result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.result-header h2 {
+  color: var(--text-main);
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.btn-outline {
+  padding: 10px 20px;
+  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-main);
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.btn-outline:hover {
+  background: var(--accent-orange);
+  border-color: var(--accent-orange);
+  box-shadow: 0 0 15px var(--accent-glow);
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 30px;
+}
+
+/* ======== KOLOM KIRI (SKOR & ISSUE) ======== */
+.score-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.score-card,
+.issue-card {
+  background: var(--bg-card);
+  padding: 30px;
+  border-radius: 24px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+.score-card h3,
+.issue-card h3 {
+  color: var(--text-muted);
+  margin-bottom: 25px;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.score-circle {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 8px solid var(--accent-orange);
+  box-shadow:
+    0 0 20px var(--accent-glow),
+    inset 0 0 20px var(--accent-glow);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 20px;
+  flex-direction: column;
+  background: rgba(255, 107, 0, 0.05);
+}
+.score-number {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1;
+}
+.score-max {
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+.issue-count {
+  color: #ef4444;
+  font-weight: 600;
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
+}
+
+.issue-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+.tag {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ff6b6b;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* ======== KOLOM KANAN (DETAIL & REKOMENDASI) ======== */
+.detail-section {
+  background: var(--bg-card);
+  border-radius: 24px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.insight-box {
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 4px solid var(--accent-orange);
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 0 12px 12px 0;
+}
+.insight-box h4 {
+  margin-bottom: 12px;
+  color: var(--text-main);
+  font-size: 1.1rem;
+}
+.insight-box h4 i {
+  color: var(--accent-orange);
+  margin-right: 8px;
+}
+.preview-text {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* ======== EFEK FADE OUT GRADASI KE BAWAH ======== */
+.locked-area {
+  position: relative;
+  margin-top: 10px;
+  flex: 1; /* Agar memanjang ke bawah */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Masking untuk membuat teks perlahan menghilang ke bawah */
+.fading-content {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0) 80%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0) 80%
+  );
+  opacity: 0.6; /* Dibuat sedikit redup karena terkunci */
+  pointer-events: none; /* Supaya teks tidak bisa di-copy user */
+}
+
+/* Kotak mock (pura-pura) disesuaikan warnanya */
+.insight-box.mock {
+  border-left-color: var(--border-color);
+}
+.insight-box.mock h4,
+.insight-box.mock h4 i {
+  color: var(--text-muted);
+}
+
+/* Overlay presisi di bagian bawah area yang memudar */
+.locked-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* Dorong konten ke bawah */
+  align-items: center;
+  text-align: center;
+  padding: 40px 20px 20px;
+  /* Gradasi dari transparan di atas, ke hitam pekat di bawah */
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--bg-card) 60%,
+    var(--bg-card) 100%
+  );
+  z-index: 10;
+}
+
+/* Gembok dibungkus lingkaran agar presisi sempurna di tengah */
+.lock-icon-wrapper {
+  width: 60px;
+  height: 60px;
+  background-color: rgba(255, 107, 0, 0.1);
+  border: 1px solid rgba(255, 107, 0, 0.3);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.lock-icon-wrapper i {
+  font-size: 1.5rem;
+  color: var(--accent-orange);
+  margin: 0; /* Menghapus margin liar bawaan font-awesome */
+}
+
+.locked-overlay h3 {
+  font-size: 1.6rem;
+  color: var(--text-main);
+  margin-bottom: 15px;
+}
+.locked-overlay p {
+  color: var(--text-muted);
+  max-width: 400px;
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
+
+/* Tombol Login presisi menggunakan inline-flex */
+.btn-primary {
+  display: inline-flex; /* Kunci presisi teks dalam tombol */
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #ff8a00, #ff5e00);
+  color: white;
+  padding: 14px 40px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s;
+  box-shadow: 0 5px 15px var(--accent-glow);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px var(--accent-glow);
+}
+
+/* ======== RESPONSIVE MOBILE ======== */
+@media screen and (max-width: 900px) {
+  .result-grid {
+    grid-template-columns: 1fr;
+  }
+  .result-header {
+    flex-direction: column;
+    gap: 20px;
+    align-items: stretch;
+  }
+  .btn-outline {
+    width: 100%;
+    text-align: center;
+  }
+}

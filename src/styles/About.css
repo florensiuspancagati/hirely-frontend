@@ -1,0 +1,130 @@
+.about-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 160px);
+  padding: 40px 20px;
+}
+
+.about-content {
+  display: flex;
+  max-width: 1100px;
+  width: 100%;
+  gap: 60px;
+  align-items: center;
+  /* Card dengan efek Glassmorphism gelap */
+  background: var(--bg-card);
+  padding: 50px 60px;
+  border-radius: 24px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+.about-text {
+  flex: 1.2;
+}
+
+.about-text h1 {
+  font-size: 3rem;
+  color: var(--text-main);
+  margin-bottom: 25px;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.about-text h1 span {
+  /* Teks gradient oranye-pink elegan */
+  background: linear-gradient(135deg, #ff8a00, #e52e71);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.about-text .lead {
+  font-size: 1.2rem;
+  color: var(--text-main);
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.about-text p {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--text-muted);
+  margin-bottom: 15px;
+}
+
+.highlight {
+  color: var(--accent-orange);
+  font-weight: 600;
+  text-shadow: 0 0 10px rgba(255, 107, 0, 0.3);
+}
+
+/* ======== VISUAL LOGO GLOWING ======== */
+.about-visual {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+/* Efek cahaya neon bocor di belakang logo */
+.about-visual::before {
+  content: "";
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  background: var(--accent-orange);
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.15;
+  z-index: 0;
+  animation: pulseGlow 4s infinite alternate;
+}
+
+.glowing-circle {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: rgba(11, 15, 25, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  box-shadow: inset 0 0 40px rgba(255, 107, 0, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.logo-icon-large {
+  font-size: 5.5rem;
+  font-weight: 800;
+  line-height: 1;
+  display: flex;
+}
+
+.about-logo-img {
+  width: 160px; /* Sesuaikan ukuran logo agar pas di dalam lingkaran */
+  height: auto;
+  object-fit: contain; /* Memastikan gambar tidak gepeng */
+  z-index: 2;
+  /* Berikan sedikit efek filter agar menyatu dengan cahaya oranye */
+  filter: drop-shadow(0 0 10px rgba(255, 107, 0, 0.5));
+}
+
+/* ======== RESPONSIVE MOBILE ======== */
+@media screen and (max-width: 900px) {
+  .about-content {
+    flex-direction: column-reverse; /* Logo pindah ke atas teks di HP */
+    text-align: center;
+    padding: 40px 25px;
+  }
+
+  .about-text h1 {
+    font-size: 2.2rem;
+  }
+  .about-text .lead {
+    font-size: 1.1rem;
+  }
+}

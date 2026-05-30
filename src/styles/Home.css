@@ -1,0 +1,250 @@
+.home-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 160px);
+  padding: 40px 20px;
+}
+
+.hero-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  width: 100%;
+  gap: 60px;
+}
+
+.hero-text {
+  flex: 1;
+}
+
+.hero-text h1 {
+  font-size: 3.5rem;
+  line-height: 1.2;
+  color: var(--text-main);
+  margin-bottom: 20px;
+}
+
+.hero-text h1 span {
+  color: var(--accent-orange);
+  /* Efek gradasi teks mewah */
+  background: linear-gradient(135deg, #ff8a00, #e52e71);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-text p {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+}
+
+/* Form Styling Premium */
+.hero-form {
+  flex: 1;
+  background-color: var(--bg-card);
+  padding: 40px;
+  border-radius: 24px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  max-width: 500px;
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+textarea {
+  width: 100%;
+  padding: 15px;
+  background-color: #1a2235;
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 1rem;
+  resize: vertical;
+  transition: all 0.3s;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: var(--accent-orange);
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.upload-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  border: 2px dashed var(--border-color);
+  border-radius: 12px;
+  background-color: rgba(26, 34, 53, 0.5);
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.upload-label:hover {
+  border-color: var(--accent-orange);
+  background-color: rgba(255, 107, 0, 0.05);
+}
+
+.upload-label i {
+  font-size: 2.5rem;
+  color: var(--accent-orange);
+  margin-bottom: 15px;
+}
+
+.file-name {
+  color: var(--accent-orange);
+  font-weight: 600;
+}
+
+.btn-check {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, #ff8a00, #ff5e00);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  /* Animasi pulse dari index.css */
+  animation: pulseGlow 2s infinite;
+}
+
+.btn-check:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px var(--accent-glow);
+}
+
+/* --- TAMPILAN LOADING ANIMASI --- */
+.loading-screen {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader-circle {
+  width: 80px;
+  height: 80px;
+  border: 4px solid var(--border-color);
+  border-top-color: var(--accent-orange);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 30px;
+}
+
+.loading-text {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, #ff8a00, #e52e71);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* --- Styling Tombol Deskripsi CV --- */
+.btn-manual-trigger {
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px 15px;
+  background: transparent;
+  border: 1px dashed var(--accent-orange);
+  color: var(--accent-orange);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-manual-trigger:hover {
+  background: rgba(255, 107, 0, 0.1);
+}
+
+/* State ketika form sudah diisi (Berubah jadi hijau) */
+.btn-manual-trigger.filled {
+  border: 1px solid #10b981;
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.btn-manual-trigger.filled:hover {
+  background: rgba(16, 185, 129, 0.2);
+}
+
+/* ======== RESPONSIVE MOBILE & TABLET ======== */
+@media screen and (max-width: 992px) {
+  .hero-section {
+    flex-direction: column; /* Mengubah susunan menjadi atas-bawah */
+    text-align: center; /* Mengetengahkan teks */
+    gap: 40px;
+  }
+
+  .hero-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-text h1 {
+    font-size: 2.8rem; /* Mengecilkan ukuran judul di tablet */
+  }
+
+  .hero-features {
+    justify-content: center;
+    flex-wrap: wrap; /* Agar fitur turun ke baris baru jika kepanjangan */
+  }
+
+  .hero-form {
+    width: 100%;
+    max-width: 100%; /* Membuat form memenuhi lebar layar HP */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .home-container {
+    padding: 20px 15px; /* Mengurangi jarak pinggir di layar HP kecil */
+  }
+
+  .hero-text h1 {
+    font-size: 2.2rem; /* Judul lebih kecil lagi di HP */
+  }
+
+  .hero-text p {
+    font-size: 1rem;
+  }
+
+  .hero-form {
+    padding: 30px 20px; /* Mengurangi padding di dalam form */
+  }
+
+  .btn-check {
+    font-size: 1rem;
+    padding: 12px;
+  }
+}

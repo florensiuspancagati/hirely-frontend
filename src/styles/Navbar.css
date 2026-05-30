@@ -1,0 +1,166 @@
+.navbar {
+  /* Efek Glassmorphism Mewah */
+  background-color: rgba(11, 15, 25, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-color);
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.05rem;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  transition: all 0.3s ease;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 30px;
+}
+
+/* Adaptasi Logo */
+.nav-logo {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.nav-logo-img {
+  height: 40px; /* Kamu bisa naik-turunkan angka ini agar pas dengan teks Cerovix */
+  width: auto;
+  object-fit: contain;
+  /* Jika logonya terasa kurang terang, bisa tambah filter shadow seperti ini: */
+  filter: drop-shadow(0 0 5px rgba(255, 107, 0, 0.5));
+}
+
+.logo-icon {
+  font-size: 1.8rem;
+  font-weight: 800;
+  line-height: 1;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.logo-text {
+  color: var(--text-main);
+  font-weight: 600;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-links li {
+  padding: 0 15px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--text-muted);
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-links a:hover {
+  color: var(--text-main);
+}
+
+/* Efek garis bawah oranye saat di-hover */
+.nav-links a:not(.login-btn)::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -5px;
+  left: 0;
+  background-color: var(--accent-orange);
+  transition: width 0.3s ease;
+}
+
+.nav-links a:not(.login-btn):hover::after {
+  width: 100%;
+}
+
+.login-btn {
+  background: transparent;
+  border: 1px solid var(--accent-orange);
+  color: var(--accent-orange) !important;
+  padding: 8px 24px;
+  border-radius: 30px; /* Sudut melengkung elegan */
+  transition: all 0.3s;
+}
+
+.login-btn:hover {
+  background: var(--accent-orange);
+  color: white !important;
+  box-shadow: 0 0 15px var(--accent-glow);
+}
+
+/* Mobile View */
+.mobile-menu-icon {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  color: var(--text-main);
+  cursor: pointer;
+}
+
+/* Mengunci ukuran gambar logo di dalam Navbar secara paksa */
+.nav-logo img,
+.logo-icon img,
+.navbar-logo-img {
+  height: 50px !important; /* !important memaksa tinggi ini yang dipakai */
+  width: auto !important;
+  object-fit: contain;
+  display: block;
+  padding: 0;
+  margin: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+  .mobile-menu-icon {
+    display: block;
+  }
+
+  .nav-links-mobile {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-card);
+    border-bottom: 1px solid var(--border-color);
+    left: 0;
+    top: 80px;
+    width: 100%;
+    padding: 20px 0;
+    gap: 15px;
+  }
+
+  .nav-links-mobile li {
+    text-align: center;
+  }
+
+  .nav-links-mobile a {
+    text-decoration: none;
+    color: var(--text-main);
+    font-size: 1.2rem;
+    display: block;
+    padding: 10px;
+  }
+}

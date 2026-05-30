@@ -1,0 +1,183 @@
+.footer {
+  background: #0b0f19; /* Warna gelap solid agar beda dengan background utama */
+  border-top: 1px solid var(--border-color);
+  padding-top: 60px;
+  margin-top: auto;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px 40px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr; /* Kolom pertama lebih lebar */
+  gap: 40px;
+}
+
+.footer-col h4 {
+  color: var(--text-main);
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* --- Kolom Brand & Alamat --- */
+.brand-col .logo-text {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--text-main);
+  display: block;
+  margin-bottom: 15px;
+}
+
+.footer-desc {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  max-width: 350px;
+}
+
+.footer-address {
+  display: flex;
+  gap: 15px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.footer-address i {
+  color: var(--accent-orange);
+  margin-top: 4px;
+}
+
+/* --- Kolom Tautan (Links) --- */
+.links-col ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.links-col a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: all 0.3s;
+}
+
+.links-col a:hover {
+  color: var(--accent-orange);
+  padding-left: 5px; /* Efek geser sedikit saat di-hover */
+}
+
+/* --- Kolom Kontak --- */
+.contact-info {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.contact-info li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.contact-info i {
+  color: var(--accent-orange);
+}
+
+.contact-info a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: 0.3s;
+}
+
+.contact-info a:hover {
+  color: white;
+}
+
+.footer-socials {
+  display: flex;
+  gap: 15px;
+}
+
+.footer-socials a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.footer-socials a:hover {
+  background: var(--accent-orange);
+  border-color: var(--accent-orange);
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px var(--accent-glow);
+}
+
+/* --- Copyright Bottom --- */
+.footer-bottom {
+  background: rgba(0, 0, 0, 0.3);
+  border-top: 1px solid var(--border-color);
+  padding: 20px;
+  text-align: center;
+}
+
+.footer-bottom p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* --- Responsive Mobile --- */
+@media screen and (max-width: 900px) {
+  .footer-container {
+    grid-template-columns: 1fr 1fr; /* Jadi 2 kolom di tablet */
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .footer-container {
+    grid-template-columns: 1fr; /* Jadi 1 kolom bersusun di HP */
+    text-align: center;
+  }
+
+  .footer-desc {
+    margin: 0 auto 20px;
+  }
+
+  .footer-address {
+    justify-content: center;
+    text-align: left;
+  }
+
+  .contact-info li {
+    justify-content: center;
+  }
+
+  .footer-socials {
+    justify-content: center;
+  }
+
+  .links-col a:hover {
+    padding-left: 0; /* Matikan efek geser di HP agar tidak aneh */
+    color: var(--accent-orange);
+  }
+}
