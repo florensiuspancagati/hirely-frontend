@@ -1,38 +1,59 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "../styles/Result.css";
 
 const Result = () => {
   const navigate = useNavigate();
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const isUserLoggedIn = localStorage.getItem('accessToken') !== null;
+
+  // TAMBAHAN UNTUK BACKEND
+  const location = useLocation();
+  const analysesResult = location.state || JSON.parse(localStorage.getItem("analysesResult") || "null");
 
   // Cek apakah user sudah login saat halaman dimuat
-  useEffect(() => {
-    const loggedIn = localStorage.getItem("isLoggedIn");
-    if (loggedIn === "true") {
-      setIsUserLoggedIn(true);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const loggedIn = localStorage.getItem("isLoggedIn");
+  //   if (loggedIn === "true") {
+  //     setIsUserLoggedIn(true);
+  //   }
+  // }, []);
 
-  const mockResult = {
-    score: 80,
-    totalIssues: 5,
-    minorIssues: ["Format tidak standar ATS", "Penggunaan bahasa campuran"],
-    saranPerbaikan: [
-      "Ganti deskripsi 'Pernah buat web' menjadi 'Mengembangkan web responsif menggunakan React yang meningkatkan efisiensi 20%'.",
-      "Gunakan format Bullet Points untuk setiap pencapaian.", // Data Premium 1
-    ],
-    rekomendasiSkill: [
-      "Pelajari State Management (Redux/Zustand) karena sering dicari di loker ini.",
-      "Sertifikasi React Advanced sangat disarankan untuk menutup gap skill.", // Data Premium 2
-    ],
-  };
+  // const mockResult = {
+  //   score: 80,
+  //   totalIssues: 5,
+  //   minorIssues: ["Format tidak standar ATS", "Penggunaan bahasa campuran"],
+  //   saranPerbaikan: [
+  //     "Ganti deskripsi 'Pernah buat web' menjadi 'Mengembangkan web responsif menggunakan React yang meningkatkan efisiensi 20%'.",
+  //     "Gunakan format Bullet Points untuk setiap pencapaian.", // Data Premium 1
+  //   ],
+  //   rekomendasiSkill: [
+  //     "Pelajari State Management (Redux/Zustand) karena sering dicari di loker ini.",
+  //     "Sertifikasi React Advanced sangat disarankan untuk menutup gap skill.", // Data Premium 2
+  //   ],
+  // };
+
+  // INI GUARD UNTUK ANALISIS
+  if (!analysesResult) {
+    return (
+      <div className="result-container">
+        <h2>Data hasil analisis tidak ditemukan</h2>
+        <button onClick={() => {
+          localStorage.removeItem("analysesResult");
+          navigate("/")
+        }}>
+          Kembali ke Home
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="result-container fade-in">
       <div className="result-header">
         <h2>Hasil Analisis CV</h2>
-        <button className="btn-outline" onClick={() => navigate("/")}>
+        <button className="btn-outline" onClick={() => {
+          localStorage.removeItem("analysesResult");
+          navigate("/")
+        }}>
           <i className="fa-solid fa-rotate-right"></i> Unggah CV Baru
         </button>
       </div>
@@ -42,19 +63,21 @@ const Result = () => {
           <div className="score-card">
             <h3>Match Score</h3>
             <div className="score-circle">
-              <span className="score-number">{mockResult.score}</span>
+              {/* result di ambil dari const analysesResult */}
+              <span className="score-number">{analysesResult.score}</span>
               <span className="score-max">/100</span>
             </div>
             <p className="issue-count">
-              {mockResult.totalIssues} Issue Ditemukan
+              {analysesResult.missingSkills.length} Issue Ditemukan
             </p>
           </div>
+
           <div className="issue-card">
             <h3>Ringkasan Issue</h3>
             <div className="issue-tags">
-              {mockResult.minorIssues.map((issue, index) => (
+              {analysesResult.missingSkills.map((item, index) => (
                 <span key={index} className="tag">
-                  <i className="fa-solid fa-triangle-exclamation"></i> {issue}
+                  <i className="fa-solid fa-triangle-exclamation"></i> {item}
                 </span>
               ))}
             </div>
@@ -66,15 +89,25 @@ const Result = () => {
           <div className="teaser-content">
             <div className="insight-box">
               <h4>Saran Perbaikan </h4>
-              <p className="preview-text">{mockResult.saranPerbaikan[0]}</p>
+              <p className="preview-text">{analysesResult.improvements.map((item, index) => (
+                  <span key={index} className="tag-improvement">
+                    {item}
+                  </span>
+                ))}
+              </p>
             </div>
             <div className="insight-box">
               <h4>Rekomendasi Skill </h4>
-              <p className="preview-text">{mockResult.rekomendasiSkill[0]}</p>
+              <p className="preview-text">{analysesResult.recommendedSkills.map((item, index) => (
+                  <span key={index} className="tag-improvement">
+                    {item}
+                  </span>
+                ))}
+              </p>
             </div>
           </div>
 
-          {/* LOGIKA PERCABANGAN: Jika belum login, tampilkan blur. Jika sudah, tampilkan detail. */}
+          {/* =================================LOGIKA PERCABANGAN: Jika belum login, tampilkan blur. Jika sudah, tampilkan detail.======================== */}
           {!isUserLoggedIn ? (
             <div className="locked-area">
               <div className="fading-content">
@@ -104,7 +137,7 @@ const Result = () => {
               </div>
             </div>
           ) : (
-            /* TAMPILAN JIKA SUDAH LOGIN (Gembok Hilang) */
+            /* =================================TAMPILAN JIKA SUDAH LOGIN (Gembok Hilang)================================= */
             <div
               className="unlocked-area fade-in"
               style={{ marginTop: "20px" }}
@@ -119,7 +152,12 @@ const Result = () => {
                   ></i>{" "}
                   Perbaikan Struktur (Premium)
                 </h4>
-                <p className="preview-text">{mockResult.saranPerbaikan[1]}</p>
+                <p className="preview-text">{analysesResult.improvements.map((item, index) => (
+                    <span key={index} className="tag-improvement">
+                      {item}
+                    </span>
+                  ))}
+                </p>
               </div>
               <div className="insight-box" style={{ borderColor: "#10b981" }}>
                 <h4>
@@ -129,7 +167,12 @@ const Result = () => {
                   ></i>{" "}
                   Rekomendasi Kursus (Premium)
                 </h4>
-                <p className="preview-text">{mockResult.rekomendasiSkill[1]}</p>
+                <p className="preview-text">{analysesResult.recommendedSkills.map((item, index) => (
+                    <span key={index} className="tag-improvement">
+                      {item}
+                    </span>
+                  ))}
+                </p>
               </div>
             </div>
           )}

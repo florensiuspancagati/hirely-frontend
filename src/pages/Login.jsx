@@ -1,30 +1,44 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Login.css";
 
+// !!!IMPORT SERVICES: TO LOGIN BY BACKEND
+import loginByBackend from '../services/authentications-services.js';
+
 const Login = () => {
-  const [isLogin, setIsLogin] = useState(true);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  const [isLogin, setIsLogin] = React.useState(true);
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [name, setName] = React.useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // SIMULASI LOGIN NYATA: Menyimpan status login di memori browser
-    localStorage.setItem("isLoggedIn", "true");
-
-    if (isLogin) {
-      alert("Login Berhasil! Mengalihkan ke Beranda...");
-      navigate("/"); // Ubah redirect ke Beranda (atau bisa ke /history nanti)
-    } else {
-      alert("Registrasi Berhasil! Anda langsung login.");
-      navigate("/");
+    if (!isLogin) {
+      alert("Fitur register belum diintegrasikan");
+      return;
     }
 
-    // Refresh halaman sedikit agar Navbar mendeteksi perubahan status
-    window.location.reload();
+    // SIMULASI LOGIN NYATA: Menyimpan status login di memori browser
+    // !!!REAL LOGIN LOGIC
+    try {
+      if (isLogin) {
+        const loginResult = await loginByBackend({ email, password });
+
+        localStorage.setItem("accessToken", loginResult.data.accessToken);
+        localStorage.setItem("refreshToken", loginResult.data.refreshToken);
+
+        alert("Login berhasil");
+
+        navigate("/");
+        window.location.reload();
+
+        return;
+      }
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   return (

@@ -1,8 +1,12 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HowItWorks from "../components/HowItWorks";
 import ManualForm from "../components/ManualForm";
 import "../styles/Home.css";
+
+// !!!IMPORT SERVICES: KONEKSI KE SERVER BACKEND
+import analyseCvFromBackend from "../services/analyses-services";
 
 const Home = () => {
   const [jobDesc, setJobDesc] = useState("");
@@ -12,6 +16,15 @@ const Home = () => {
 
   // 1. STATE BARU: Untuk mengecek apakah form manual sudah diisi
   const [isManualFilled, setIsManualFilled] = useState(false);
+
+  // !!!STATE UNTUK MENERIMA DATA DARI POP UP FORM, LALU AKAN DI KIRIM KE BACKEND
+  const [manualData, setManualData] = useState({
+    fullname: "",
+    position: "",
+    education: "",
+    experience: "",
+    skill: "",
+  })
 
   const navigate = useNavigate();
 
@@ -33,7 +46,7 @@ const Home = () => {
     }
   };
 
-  const handleCheck = (e) => {
+  const handleCheck = async (e) => {
     e.preventDefault();
 
     // 2. VALIDASI BARU SESUAI ALUR
@@ -52,13 +65,37 @@ const Home = () => {
       return;
     }
 
-    setIsAnalyzing(true);
+    // !!!TRY CATCH UNTUK PROSES FETCH KE BACKEND
+    try {
+      setIsAnalyzing(true);
+      
+      const analysesResult = await analyseCvFromBackend({
+        jobDescription: jobDesc,
+        fullname: manualData.fullname,
+        position: manualData.position,
+        education: manualData.education,
+        experience: manualData.experience,
+        skill: manualData.skill,
+        cv: cvFile,
+      });
+      // console.log(analysesResult);
 
-    setTimeout(() => {
+      // !!!SIMPAN KE LOCALSTORAGE SUPAYA GA HILANG PAS REFRESH
+      localStorage.setItem("analysesResult", JSON.stringify(analysesResult.data.analyses));
+
+      // !!!KITA KIRIM DATA HASIL ANALISIS KE RESULT.JSX
+      navigate("/result", {
+        state: analysesResult.data.analyses,
+      });
+      // console.log("Data siap dikirim:", { jobDesc, cvFile, manualData });
+
+    } catch (error) {
+      console.error(error);
+      alert(error.message)
+
+    } finally {
       setIsAnalyzing(false);
-      console.log("Data siap dikirim:", { jobDesc, cvFile, isManualFilled });
-      navigate("/result");
-    }, 3000);
+    }
   };
 
   return (
@@ -151,7 +188,11 @@ const Home = () => {
       <ManualForm
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        onSave={() => setIsManualFilled(true)}
+        onSave={(data) => {
+          console.log("manual data: ", data);
+          setManualData(data);
+          setIsManualFilled(true);
+        }}
       />
     </>
   );
