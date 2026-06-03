@@ -1,27 +1,32 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/Navbar.css";
 import logo from "../assets/logo.png";
 
+import { logoutByBackend } from "../services/authentications-services";
+
 const Navbar = () => {
   const [isMobile, setIsMobile] = useState(false);
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const isLogin = localStorage.getItem('accessToken') !== null;
   const navigate = useNavigate();
 
-  // Cek status login
-  useEffect(() => {
-    const loggedIn = localStorage.getItem("isLoggedIn");
-    if (loggedIn === "true") {
-      setIsUserLoggedIn(true);
-    }
-  }, []);
+  const handleLogout = async () => {
+    try {
+      await logoutByBackend();
+    } catch (err) {
+      console.error(err);
+    } finally {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
 
-  const handleLogout = () => {
-    localStorage.removeItem("isLoggedIn"); // Hapus memori login
-    setIsUserLoggedIn(false);
-    alert("Anda telah logout.");
-    navigate("/");
-    window.location.reload();
+      if (localStorage.getItem('analysesResult')) {
+        localStorage.removeItem('analysesResult');
+      }
+      
+      alert('Berhasil logout');
+      navigate('/');
+      window.location.reload();
+    }
   };
 
   return (
@@ -49,7 +54,7 @@ const Navbar = () => {
           </li>
 
           {/* LOGIKA NAVBAR: Tampil beda jika login */}
-          {isUserLoggedIn ? (
+          {isLogin ? (
             <>
               {/* Fitur Riwayat disembunyikan sementara untuk rilis mendatang */}
               {/* <li><Link to="/history" style={{color: 'var(--accent-orange)'}}>Riwayat Analisis</Link></li> */}

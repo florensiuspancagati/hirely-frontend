@@ -1,49 +1,59 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "../styles/Login.css";
 
 // !!!IMPORT SERVICES: TO LOGIN BY BACKEND
-import loginByBackend from '../services/authentications-services.js';
+import { loginByBackend, registerByBackend } from '../services/authentications-services.js';
 
 const Login = () => {
   const [isLogin, setIsLogin] = React.useState(true);
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [name, setName] = React.useState("");
+  const [fullname, setFullname] = React.useState("");
+  const [username, setUsername] = React.useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+  const redirectTo = location.state?.from || '/';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!isLogin) {
-      alert("Fitur register belum diintegrasikan");
-      return;
-    }
-
-    // SIMULASI LOGIN NYATA: Menyimpan status login di memori browser
-    // !!!REAL LOGIN LOGIC
     try {
+      // !!!REAL LOGIN LOGIC
       if (isLogin) {
         const loginResult = await loginByBackend({ email, password });
-
+        
         localStorage.setItem("accessToken", loginResult.data.accessToken);
         localStorage.setItem("refreshToken", loginResult.data.refreshToken);
-
+        
         alert("Login berhasil");
-
-        navigate("/");
+        
+        navigate(redirectTo);
         window.location.reload();
-
+        
         return;
       }
+
+      // !!!REAL REGISTER LOGIC
+      const registerResult = await registerByBackend({ fullname, username, email, password });
+
+      alert(registerResult.message || 'Register berhasil');
+      
+      setFullname('');
+      setUsername('');
+      setEmail('');
+      setPassword('');
+
+      setIsLogin(true);
     } catch (error) {
       alert(error.message);
     }
   };
 
+  // Display
   return (
     <div className="auth-container fade-in">
       <div className="auth-card">
+
         <div className="auth-header">
           <h2>{isLogin ? "Selamat Datang Kembali" : "Buat Akun Baru"}</h2>
           <p>
@@ -54,21 +64,44 @@ const Login = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="auth-form">
-          {!isLogin && (
-            <div className="form-group">
-              <label>Nama Lengkap</label>
-              <div className="input-with-icon">
-                <i className="fa-regular fa-user"></i>
-                <input
-                  type="text"
-                  placeholder="Masukkan nama lengkap"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required={!isLogin}
-                />
+          {/* bagian ini tampil saat register */}
+          {!isLogin &&
+            (
+              <div className="form-group">
+                <label>Nama Lengkap</label>
+                <div className="input-with-icon">
+                  <i className="fa-regular fa-user"></i>
+                  <input
+                    type="text"
+                    placeholder="Masukkan nama lengkap"
+                    value={fullname}
+                    onChange={(e) => setFullname(e.target.value)}
+                    required={!isLogin}
+                  />
+                </div>
               </div>
-            </div>
-          )}
+            )
+          }
+
+          {!isLogin &&
+            (
+              <div className="form-group">
+                <label>Username</label>
+                <div className="input-with-icon">
+                  <i className="fa-regular fa-user"></i>
+                  <input
+                    type="text"
+                    placeholder="Masukkan username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    required={!isLogin}
+                  />
+                </div>
+              </div>
+            )
+          }
+
+          {/* bagian ini tampil saat login */}
           <div className="form-group">
             <label>Email</label>
             <div className="input-with-icon">
@@ -82,6 +115,7 @@ const Login = () => {
               />
             </div>
           </div>
+
           <div className="form-group">
             <label>Password</label>
             <div className="input-with-icon">
@@ -95,6 +129,7 @@ const Login = () => {
               />
             </div>
           </div>
+
           <button type="submit" className="btn-auth">
             {isLogin ? "Masuk ke Dashboard" : "Daftar Sekarang"}
           </button>

@@ -131,7 +131,8 @@ const Result = () => {
                   Temukan sisa saran perbaikan dan rekomendasi skill lainnya
                   dengan masuk ke akunmu.
                 </p>
-                <Link to="/login" className="btn-primary">
+                {/* memberi tahu login, bahwa kita login dari halaman result */}
+                <Link to="/login" state={{ from: location.pathname}} className="btn-primary">
                   Masuk / Daftar Sekarang
                 </Link>
               </div>
