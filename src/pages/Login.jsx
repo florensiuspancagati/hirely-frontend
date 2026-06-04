@@ -28,7 +28,7 @@ const Login = () => {
         alert("Login berhasil");
         
         navigate(redirectTo);
-        window.location.reload();
+        // window.location.reload();
         
         return;
       }
