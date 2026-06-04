@@ -62,6 +62,8 @@ const Result = () => {
         <div className="score-section">
           <div className="score-card">
             <h3>Match Score</h3>
+            <h5>{analysesResult.isMatch ? 'Cocok' : 'Tidak Cocok'}</h5>
+            <h5>{analysesResult.summary}</h5>
             <div className="score-circle">
               {/* result di ambil dari const analysesResult */}
               <span className="score-number">{analysesResult.score}</span>
@@ -88,17 +90,18 @@ const Result = () => {
           {/* Konten Gratis (Selalu Tampil) */}
           <div className="teaser-content">
             <div className="insight-box">
-              <h4>Saran Perbaikan </h4>
-              <p className="preview-text">{analysesResult.improvements.map((item, index) => (
+              <h4>Skill di Curiculum Vitae</h4>
+              <p className="preview-text">{analysesResult.cvSkills.map((item, index) => (
                   <span key={index} className="tag-improvement">
                     {item}
                   </span>
                 ))}
               </p>
             </div>
+
             <div className="insight-box">
-              <h4>Rekomendasi Skill </h4>
-              <p className="preview-text">{analysesResult.recommendedSkills.map((item, index) => (
+              <h4>Skill di Job Description</h4>
+              <p className="preview-text">{analysesResult.jdSkills.map((item, index) => (
                   <span key={index} className="tag-improvement">
                     {item}
                   </span>
@@ -151,9 +154,9 @@ const Result = () => {
                     className="fa-solid fa-wand-magic-sparkles"
                     style={{ color: "#10b981" }}
                   ></i>{" "}
-                  Perbaikan Struktur (Premium)
+                  Skill yang cocok (Premium)
                 </h4>
-                <p className="preview-text">{analysesResult.improvements.map((item, index) => (
+                <p className="preview-text">{analysesResult.matchedSkills.map((item, index) => (
                     <span key={index} className="tag-improvement">
                       {item}
                     </span>
